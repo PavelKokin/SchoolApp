@@ -10,18 +10,18 @@ namespace SchoolApp
     {
         public string Name;
         public string Surname;
-
-        public Student(string name, string surname)
+        public int Age;
+        public Student(string name, string surname, int age)
         {
             Name = name;
             Surname = surname;
+            Age = age;
         }
     }
     public class School
     {
         public string Name;
         public List<Student> Students;
-
         public School(string name)
         {
             Name = name;
@@ -35,10 +35,10 @@ namespace SchoolApp
             }
             else
             {
-                Console.WriteLine("{0, -20} {1, -20}", "Имя", "Фамилия");
+                Console.WriteLine("{0, -20} {1, -20} {2, -5}", "Имя", "Фамилия", "Возраст");
                 for (int i = 0; i < Students.Count; i++)
                 {
-                    Console.WriteLine("{0, -20} {1, -20}", Students[i].Name, Students[i].Surname);
+                    Console.WriteLine("{0, -20} {1, -20} {2, -5}", Students[i].Name, Students[i].Surname, Students[i].Age);
                 }
             }
         }
@@ -59,22 +59,34 @@ namespace SchoolApp
             while (true)
             {
                 Console.WriteLine($"Отобразить список учеников школы \"{school.Name}\"? Введите да или нет:");
-                string userAnswer = Console.ReadLine();
-                if (userAnswer == "да")
+                if (GetUserAnswer())
                 {
                     school.PrintStudents();
                 }
                 Console.WriteLine($"Хотите добавить ученика в школу \"{school.Name}\"? Введите да или нет:");
-                userAnswer = Console.ReadLine();
-                if (userAnswer == "да")
+                if (GetUserAnswer())
                 {
                     Console.WriteLine("Введите имя ученика:");
                     string name = Console.ReadLine();
                     Console.WriteLine("Введите фамилию ученика:");
                     string surname = Console.ReadLine();
-                    Student newStudent = new Student(name, surname);
+                    Console.WriteLine("Введите возраст ученика:");
+                    int age = Convert.ToInt32(Console.ReadLine());
+                    Student newStudent = new Student(name, surname, age);
                     school.AddNewStudent(newStudent);
                 }
+            }
+        }
+        static bool GetUserAnswer()
+        {
+            string userAnswer = Console.ReadLine();
+            if (userAnswer.ToLower() == "да")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
